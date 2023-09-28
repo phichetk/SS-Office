@@ -7,8 +7,6 @@
 # Contact : phichet@siamsoft.com
 #######################################
 session_start();
-
-
 ########## Load Configuration ##########
 require("../../../office-data/config/default-config.php");
 require("../../../office-data/config/db-connect.php");
@@ -25,7 +23,7 @@ $adminlogin2 = new adminlogin();
 $username=$_POST['username'];
 $password=$_POST['password'];
 $myKey=$_REQUEST['myKey'];
-//àªç¤ user start
+//ï¿½ï¿½ user start
 
 //if (isset($_SESSION["user"])) { 
 //  echo $_SESSION["user"];
@@ -36,25 +34,21 @@ $myKey=$_REQUEST['myKey'];
 //if(!isset($_SESSION['user'])){
 if(0){
 	////echo "session not register";
-	require_once("index.php");
-	$adminlogin_result = $adminlogin->checkuser($username,$password);
-	
-	if(isset($_SESSION['user'])){
-	$sql="INSERT INTO  `ws_user_log` (`UserName` , `IPAddress` ) VALUES ( '".$_SESSION['user']."' , '".getenv('REMOTE_ADDR')."' )";
-	$result=$adminlogin->query($sql);
-	print("<SCRIPT LANGUAGE='JavaScript'>");
-	print("setTimeout(\"window.location='main.php'\",300);");
-	print("</SCRIPT>");
-	$yyy=0;
-	}
-
+    require_once("index.php");
+    $adminlogin_result = $adminlogin->checkuser($username,$password);
+    if(isset($_SESSION['user'])){
+    $sql="INSERT INTO  `ws_user_log` (`UserName` , `IPAddress` ) VALUES ( '".$_SESSION['user']."' , '".getenv('REMOTE_ADDR')."' )";
+    $result=$adminlogin->query($sql);
+    print("<SCRIPT LANGUAGE='JavaScript'>");
+    print("setTimeout(\"window.location='main.php'\",300);");
+    print("</SCRIPT>");
+    $yyy=0;
+    }
 }else{
 //echo "sadfasdfasdf==".$_SESSION['user'];
 ///////echo "session registered";
-
 require_once("template/head.php");
-
- ?>
+?>
 
 <body class="body" >
 
@@ -64,13 +58,14 @@ require_once("template/head.php");
 	<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
       <tr>
         <td height="26" colspan="2" background="../images/bg_head.jpg" class="rmenu">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
+		   <table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td width="240" height="81"><img src="../images/logo_new.jpg" width="300" height="81"></td>
             <td valign="top">&nbsp;</td>
             <td width="30"></td>
           </tr>
-        </table></td>
+        </table>
+      </td>
       </tr>
       <tr>
         <td colspan="2" class="rmenu"><table width="100%" border="0" cellspacing="0" cellpadding="0">
