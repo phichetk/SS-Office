@@ -1,22 +1,26 @@
 <?php
-$user1 = $_REQUEST['username'];
-$pass1 = $_REQUEST['password'];
 
+require("./office-data/config/default-config.php");
 
- header( "location: /public_html/office/wtax/main.php" );
+if(ADMIN_LOGIN_USER==$_REQUEST['username'] && ADMIN_LOGIN_PASS==$_REQUEST['password'] )
+{
+session_start();
+ header( "location: /siamsoft-all/public_html/office/main.php" );
  exit(0);
+}
+
 
 ?>
 
 
 <html>
 <head>
-<title>LOGIN</title>
-<meta name="robots" content="noindex,nofollow">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<style>
-*{ FONT-SIZE: 8.5pt; FONT-FAMILY: verdana; } b { FONT-WEIGHT: bold; } .listtitle { BACKGROUND: #425984; COLOR: #EEEEEE; white-space: nowrap; border-radius: 3px; box-shadow: 1px 1px 3px #727272; } td.list { BACKGROUND: #EEEEEE; white-space: nowrap; } input { border-radius: 3px; padding-left: 4px; padding-right: 4px; } .inset { border: 1px inset #DDDDDD; } #footer { position: fixed; bottom: 0; width: 100%; padding-bottom: 20px; text-align: center; color: #A1A1A1; } #outofsync { font-weight: bold; color: #990000; }
-</style>
+    <title>LOGIN</title>
+    <meta name="robots" content="noindex,nofollow">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+    *{ FONT-SIZE: 8.5pt; FONT-FAMILY: verdana; } b { FONT-WEIGHT: bold; } .listtitle { BACKGROUND: #425984; COLOR: #EEEEEE; white-space: nowrap; border-radius: 3px; box-shadow: 1px 1px 3px #727272; } td.list { BACKGROUND: #EEEEEE; white-space: nowrap; } input { border-radius: 3px; padding-left: 4px; padding-right: 4px; } .inset { border: 1px inset #DDDDDD; } #footer { position: fixed; bottom: 0; width: 100%; padding-bottom: 20px; text-align: center; color: #A1A1A1; } #outofsync { font-weight: bold; color: #990000; }
+    </style>
 </head>
 <body onload="document.form.username.focus();if(document.form.referer.value.indexOf('#')==-1)document.form.referer.value+=location.hash;">
 <center><br><br><br><br>
