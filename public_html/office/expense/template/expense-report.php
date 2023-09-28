@@ -1,0 +1,22 @@
+<?php	
+/////
+ $SHOW_FILE_NAME = (SHOW_FILE_NAME == "Y") ? basename($path): "";
+ echo $SHOW_FILE_NAME;
+/////
+?>
+	<div role="main" class="ui-content jqm-content">
+
+		<h1>Expense Report</h1>
+		<ul data-role="listview" data-count-theme="b" data-inset="true">
+		     <?
+            $SQL_Exp = "SELECT * FROM expend ORDER BY EXPID desc";
+            $RESULT_Exp = $adminlogin->query($SQL_Exp);
+                while($ROW_Exp= mysql_fetch_array($RESULT_Exp)){
+            ?>
+             <li><a href="#"><?=$ROW_Exp['ExpID']?> <?=$ROW_Exp['Detail']?><span class="ui-li-count"><?=$ROW_Exp['Amount']?></span></a></li>
+            <?      
+                }  
+            ?>
+        </ul>
+
+	</div>

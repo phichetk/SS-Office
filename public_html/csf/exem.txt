@@ -1,0 +1,2 @@
+iptables -I INPUT -s  203.114.108.14   -p tcp -m state --state NEW -m tcp --dport 20:11000 -j DROP
+iptables -I INPUT -p all -s 203.114.108.14 -j DROP

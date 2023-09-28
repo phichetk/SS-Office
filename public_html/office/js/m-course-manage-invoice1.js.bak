@@ -1,0 +1,29 @@
+/*
+function mcoursemanage(){
+	var elemcourse_s1 = document.getElementById('course_s1');
+	var elemcourse_s2 = document.getElementById('course_s2');
+
+		if(elemcourse_s1.checked == true){
+			document.getElementById('caption_s').innerHTML = "ชื่อ หลักสูตร";
+		}
+
+		if(elemcourse_s2.checked == true){
+			document.getElementById('caption_s').innerHTML = "รหัส หลักสูตร";
+		}
+
+}
+*/
+
+function checkbox_for_invoice(zzz){
+	var zzz;
+
+	if(document.getElementById('pupilID'+zzz).checked==true){
+	document.getElementById('invoice1').value
+	document.getElementById('invoice1').href=document.getElementById('invoice1').href+"&PupilID="+zzz;
+	}
+	if(document.getElementById('pupilID'+zzz).checked==false){
+	var getstr = document.getElementById('invoice1').value;
+	//document.write(getstr.replace("&PupilID="+zzz , ""));
+	document.getElementById('invoice1').href=getstr.replace("&PupilID="+zzz , "")
+	}
+}

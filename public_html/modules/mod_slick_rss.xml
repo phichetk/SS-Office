@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<mosinstall type="module">
+	<name>Slick RSS</name>
+	<author>David Thomas</author>
+	<creationDate>January 2007</creationDate>
+	<copyright>(C) 2007 David Thomas. All Rights Reserved</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<authorEmail>davidwhthomas@gmail.com</authorEmail>
+	<authorUrl>m-net.net.nz</authorUrl>
+	<version>1.2</version>
+	<description>Module to display up to 5 RSS feeds with mouseover tooltip teaser text</description>
+	<files>
+		<filename module="mod_slick_rss">mod_slick_rss.php</filename>
+	</files>
+	<params>
+		<param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="A suffix to be applied to the css class of the module (table.moduletable), this allows individual module styling" />
+		<param name="cache" type="radio" default="0" label="Module Cache" description="Select whether to cache the content of this module">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="rsscache" type="text" size="6" default="3600" label="RSS Cache time" description="Set the cache time for the RSS feed(s)" />
+		<param name="@spacer" type="spacer" default="" label="" description="" />
+		<param name="rssurl1" type="text" size="50" default="" label="RSS URL 1" description="Enter the URL of a RSS/RDF feed" />
+		<param name="rssurl2" type="text" size="50" default="" label="RSS URL 2" description="(optional) Enter the URL of a second RSS/RDF feed" />
+		<param name="rssurl3" type="text" size="50" default="" label="RSS URL 3" description="(optional) Enter the URL of a third RSS/RDF feed" />
+		<param name="rssurl4" type="text" size="50" default="" label="RSS URL 4" description="(optional) Enter the URL of a fourth RSS/RDF feed" />
+		<param name="rssurl5" type="text" size="50" default="" label="RSS URL 5" description="(optional) Enter the URL of a fifth RSS/RDF feed" />
+		<param name="rsstitle" type="radio" default="0" label="Feed Title" description="Display news feed title">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="rssdesc" type="radio" default="0" label="Feed Description" description="Show the description text for each news feed">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="rssimage" type="radio" default="0" label="Feed Image" description="Show the image associated with each news feed">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="rssitems" type="text"  size="6" default="5" label="Number of Items" description="Enter number of RSS items to display for each RSS feed" />
+		<param name="rssitemtitle_words" type="text" size="6" default="15" label="Item Title Word Count " description="Allows you to limit the amount of visible item title text. 0 will show all the text" />
+		<param name="rssitemdesc" type="radio" default="0" label="Item Description Text" description="Show description text for each RSS item in the main list.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="rssitemdesc_words" type="text" size="6" default="25" label="Item Description Word Count" description="Maximum number of words to display for each RSS item description. 0 will show all the text" />
+		<param name="rssitemdesc_images" type="radio" default="1" label="Item Description Text Images" description="Allow images in the item description text in the main list.">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>		
+		<param name="@spacer" type="spacer" default="" label="Tooltip Settings" description="The settings below are related to the mouseover tooltip" />
+		<param name="enable_tooltip" type="radio" default="yes" label="Enable Tooltip" description="Show item description in mouseover tooltip? e.g this one!">
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+		</param>
+		<param name="t_word_count_title" type="text" size="6" default="25" label="Tooltip Title Word Count" description="Allows you to limit the amount of visible item title text in the tooltip. 0 will show all the text" />
+		<param name="t_word_count_desc" type="text" size="6" default="25" label="Tooltip Description Word Count" description="Allows you to limit the amount of visible item description text in the tooltip. 0 will show all the text" />
+		<param name="tooltip_desc_images" type="radio" default="1" label="Tooltip Description Text Images" description="Allow images in the tooltip description text">
+			<option value="1">Yes</option>
+			<option value="0">No</option>
+		</param>
+		<param name="tooltip_bgcolor" type="text" default="#000000" size="8" label="Tooltip Caption Background Color" description="Color of tooltip caption background and border in hexidecimal notation e.g. #24537d" />
+		<param name="tooltip_capcolor" type="text" default="#ffffff" size="8" label="Tooltip Caption Font Color" description="Color of tooltip caption font in hexidecimal notation e.g. #ffffff" />
+		<param name="tooltip_fgcolor" type="text" default="#ffffff" size="8" label="Tooltip Body Background Color" description="Color of tooltip body background in hexidecimal notation e.g. #E1F0FF" />
+		<param name="tooltip_textcolor" type="text" default="#000000" size="8" label="Tooltip Body Font Color" description="Color of tooltip body font in hexidecimal notation e.g. #000000" />
+		<param name="tooltip_border" type="text" default="1" size="5" label="Tooltip Border Width" description="Width of tooltip border in pixels e.g 2" />
+		<param name="tooltip_extra_invocation_string" type="text" size="50" default="" label="Extra Tooltip Parameters" description="(Advanced) Extra parameters to use when creating tooltip, for more options, see http://www.bosrup.com/web/overlib/?Command_Reference" />
+	</params>
+</mosinstall>

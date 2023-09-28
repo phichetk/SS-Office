@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="iso-8859-11"?>
+<!-- generator="FeedCreator 1.7.2" -->
+<rss version="0.91">
+	<channel>
+		<title>Joomla! powered Site</title>
+		<description>Joomla! site syndication</description>
+		<link>http://www.siamsoft.com</link>
+		<lastBuildDate>Sun, 28 Jan 2007 05:29:23 +0100</lastBuildDate>
+		<generator>FeedCreator 1.7.2</generator>
+		<image>
+			<url>http://www.siamsoft.com/images/M_images/joomla_rss.png</url>
+			<title>Powered by Joomla!</title>
+			<link>http://www.siamsoft.com</link>
+			<description>Joomla! site syndication</description>
+		</image>
+		<item>
+			<title>Linux สั่งprint ไปยัง windows server</title>
+			<link>http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=13&amp;Itemid=2</link>
+			<description>Linux สั่งprint ไปยัง printer ที่ใช้ windows เป็น server</description>
+			<category>News - Latest</category>
+			<pubDate>Tue, 12 Apr 2005 17:29:05 +0100</pubDate>
+		</item>
+		<item>
+			<title>ยินดีต้อนรับ</title>
+			<link>http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=12&amp;Itemid=2</link>
+			<description>สวัสดีครับ ยินดีต้อนรับเข้าสู้เวบสำหรับแนะนำการใช้งาน software สำหรับ ผู้ที่สนใจ พัฒนาโปรแกรม..</description>
+			<category>News - Latest</category>
+			<pubDate>Tue, 12 Apr 2005 09:12:51 +0100</pubDate>
+		</item>
+	</channel>
+</rss>

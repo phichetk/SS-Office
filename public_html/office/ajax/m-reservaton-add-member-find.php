@@ -1,0 +1,54 @@
+<?php
+header("Content-Type: text/plain; charset=utf-8");
+########## Load Configuration ##########
+require("../../../config/default-config.php");
+require("../../../config/db-connect.php");
+require("../../../classes/adminlogin.php");
+
+
+########## Action ##########
+$adminlogin = new adminlogin();
+
+$MemberName = trim($_REQUEST["MemberName"]);
+if($MemberName!=""){
+
+	$sql = "SELECT ID, CoTitle , CompanyName, MemberGroup, MemberType, BillAddress ,BillTumbon, BillUmper, BillProvice FROM ws_member_detail  ";
+	$sql .= "WHERE CompanyName LIKE '%".$MemberName."%' ";
+	$sql .= " LIMIT 0 , 5";
+
+	$result=$adminlogin->query($sql);
+
+	if(mysql_num_rows($result)>0){	  
+		echo "<table style='border: 1px solid #999; font-family: verdana; arial, sans-serif; font-size: 11px; padding: 4px; margin: 0 0 5px 0; cursor: default; color: red;' id='search'>";
+		while($row = mysql_fetch_array($result)) { 
+
+			$ID = $row['ID'];
+			$MemberGroup =$row['MemberGroup'];
+			$MemberType =$row['MemberType'];
+			$BillAddress =$row['BillAddress'];
+			$BillTumbon =$row['BillTumbon'];
+			$BillUmper =$row['BillUmper'];
+			$BillProvice =$row['BillProvice'];
+			
+			$CompanyName = $row['CompanyName'];
+
+			$CoTitle =trim($row['CoTitle']);
+				$sql2		=	"SELECT Abstract FROM ws_member_cotitle WHERE ID='".$CoTitle."'";
+				$result2	=	$adminlogin->query($sql2);
+				$row2 = mysql_fetch_array($result2);
+				$Abstract =trim($row2['Abstract']);
+
+
+
+
+			echo "		<tr><b>";
+			//echo "			<td onclick=\"GetMemberID('".$ID."','".stripslashes($Abstract)." ".stripslashes($CompanyName)."')\">CU".stripslashes($ID)."</td>";
+			echo "			<td onclick=\"GetMemberID('".$ID."','".stripslashes($Abstract)." ".stripslashes($CompanyName)."')\">".stripslashes($Abstract)." ".stripslashes($CompanyName)." ".stripslashes($BillAddress)." ".stripslashes($BillTumbon)." ".stripslashes($BillUmper)." ".stripslashes($BillProvice)."</td>";
+			echo "		</b></tr>";		
+		
+		} 
+		echo "</table>";
+	}
+
+}
+?>

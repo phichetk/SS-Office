@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-11"?>
+<mosinstall type="language">
+	<name>Thai</name>
+	<version>1.0</version>
+	<creationDate>Sep, 8, 2004</creationDate>
+	<author>Pongkiat Chedpitaksakul</author>
+	<authorEmail>kcpongki@kmitl.ac.th</authorEmail>
+	<files>
+		<filename>thai.php</filename>
+		<filename>thai.xml</filename>
+	</files>
+</mosinstall>

@@ -1,0 +1,130 @@
+
+<?php
+
+/////
+ $SHOW_FILE_NAME = (SHOW_FILE_NAME == "Y") ? "receipt-report ": "";
+ echo $SHOW_FILE_NAME;
+////
+$_REQUEST['INPUTYEAR'];
+
+$issueThisYear = date('Y');
+$ThisYear1 = $issueThisYear;
+$LastYear1 = $issueThisYear -1;
+$NextYear1 = $issueThisYear +1;
+
+if(isset($_REQUEST['INPUTYEAR'])){
+    $YearInput =  $_REQUEST['INPUTYEAR'];
+}else{
+    $YearInput = $ThisYear1;
+}
+
+$issuePrefix = $issueThisYear.$issueThisMonth;
+
+
+
+?>
+            <table>
+                <FROM>
+                <tbody>
+                     <tr bgcolor="#FFCC00"> 
+            				  <td width="5%" height="20" align="center" bgcolor="#6A98A7" class="Ar12Bb">ตั้งแต่วันที่</td> 
+                              <td width="5%" height="20" align="center" bgcolor="#6A98A7" class="Ar12Bb">ถึงวันที่</td>
+                              <td width="5%" height="20" align="center" bgcolor="#6A98A7" class="Ar12Bb"></td>
+            	         </tr> 
+                         <tr bgcolor="#CFE4E9"> 
+       				          <td><script>DateInput('issueDate', true, 'DD-MM-YYYY')</script></td>
+                              <td><script>DateInput('issueDate', true, 'DD-MM-YYYY')</script></td>
+                              <td><input type="submit" /> </td>
+            	         </tr> 
+                         <tr>
+                              <td><a  >ALL</a> || 
+							  <a  href="./main.php?myKey=Receipt-Report&INPUTYEAR=<?=$LastYear1?>"  ><?=$LastYear1?></a> || 
+							  <a  href="./main.php?myKey=Receipt-Report&INPUTYEAR=<?=$ThisYear1?>"  ><?=$ThisYear1?></a> || 
+							  <a  href="./main.php?myKey=Receipt-Report&INPUTYEAR=<?=$NextYear1?>" ><?=$NextYear1?></a>  </td>
+                         </tr>
+                         </tr>
+                </tbody>
+                </FROM>
+            </table>
+
+        <table cellSpacing=1 cellPadding=1 width="100%" border=0>
+            <tbody>
+            
+            
+             
+             <tr bgcolor="#FFCC00"> 
+				  <td width="5%" height="20" align="center" bgcolor="#6A98A7" class="Ar12Bb">Date</td> 
+                  <td width="5%" height="20" align="center" bgcolor="#6A98A7" class="Ar12Bb">ID</td>
+				  <td width="25%" align="center" bgcolor="#6A98A7" class="Ar12Bb">ชื่อลูกค้า</td>
+                   <td width="5%" align="center" bgcolor="#6A98A7" class="Ar12Bb">ราคา1</td>
+                  <td width="5%" align="center" bgcolor="#6A98A7" class="Ar12Bb">พิมพ์ซอง</td>
+                  <td width="5%" align="center" bgcolor="#6A98A7" class="Ar12Bb">พิมพ์เอกสาร</td>
+	         </tr> 
+<?
+
+$SQL_RECEIPT_REPORT  = " SELECT ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.ID,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.IssueName,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.IssueDate,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.BillingNo,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.Price1,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.Price2,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.Price3,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.Price4,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.Price5,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.Price6,  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.Price7,  ";
+
+$SQL_RECEIPT_REPORT .= " ss_billing_customer.CompanyName,  ";
+
+
+
+$SQL_RECEIPT_REPORT .= " ss_billing_customer.ID AS GID  ";
+
+
+$SQL_RECEIPT_REPORT .= " FROM ss_billing_transection  ";
+$SQL_RECEIPT_REPORT .= " INNER JOIN ss_billing_customer  ";
+$SQL_RECEIPT_REPORT .= " ON  ";
+$SQL_RECEIPT_REPORT .= " ss_billing_transection.CustomerID=ss_billing_customer.ID ";
+$SQL_RECEIPT_REPORT .= " WHERE year(ss_billing_transection.IssueDate)=".$YearInput;
+$SQL_RECEIPT_REPORT .= " ORDER BY BillingNo ASC";
+
+//echo $SQL_RECEIPT_REPORT;
+
+$RESULT_RECEIPT_REPORT=$adminlogin->query($SQL_RECEIPT_REPORT);
+    $TotalALL =0; //Start $TotalALL;
+    while($ROW_RECEIPT_REPORT= mysql_fetch_array($RESULT_RECEIPT_REPORT)){
+        
+    $TotalPrice = $ROW_RECEIPT_REPORT['Price1']
+                +$ROW_RECEIPT_REPORT['Price2']
+                +$ROW_RECEIPT_REPORT['Price3']
+                +$ROW_RECEIPT_REPORT['Price4']
+                +$ROW_RECEIPT_REPORT['Price5']
+                +$ROW_RECEIPT_REPORT['Price6']
+                +$ROW_RECEIPT_REPORT['Price7'];
+               
+?>
+                                 
+                <tr bgcolor="#CFE4E9"> 
+                	<td><A href='main.php?myKey=Receipt-Issue-Edit&TransectionID=<?echo  intval($ROW_RECEIPT_REPORT['ID']); ?>' ><? echo $ROW_RECEIPT_REPORT['IssueDate']; ?></A></td>
+                    <td><? echo $ROW_RECEIPT_REPORT['BillingNo']; ?></td>
+                	<td><? echo $ROW_RECEIPT_REPORT['CompanyName']?></td>
+                    <td align="right" ><?=number_format($TotalPrice,2)?>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                    <td><A href='../post/post.php?GID=<?=$ROW_RECEIPT_REPORT['GID']?>' target='_blank' >พิมพ์ซอง</A></td>
+                    <td><A href='billprint.php?TransectionID=<?=$ROW_RECEIPT_REPORT['ID']?>' target='_blank' >พิมพ์ใบเสร้จ</A></td>
+                </tr>
+
+<?      
+    $TotalALL = $TotalALL +$TotalPrice;
+    }                 
+?>
+                <tr>
+                    <td></td>
+                    <td></td>
+                	<td></td>
+                    <td align="right"><?=number_format($TotalALL,2)?></td>
+                    <td></td>
+                	<td></td>
+                </tr>
+            </tbody>
+        </table>

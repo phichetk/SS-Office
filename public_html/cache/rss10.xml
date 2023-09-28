@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-11"?>
+<!-- generator="FeedCreator 1.7.2" -->
+<rdf:RDF
+	xmlns="http://purl.org/rss/1.0/"
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/">
+	<channel rdf:about="http://www.siamsoft.com">
+		<title>Joomla! powered Site</title>
+		<description>Joomla! site syndication</description>
+		<link>http://www.siamsoft.com</link>
+		<image rdf:resource="http://www.siamsoft.com/images/M_images/joomla_rss.png" />
+	   <dc:date>2007-01-25T13:20:54+01:00</dc:date>
+		<items>
+			<rdf:Seq>
+				<rdf:li rdf:resource="http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=13&amp;Itemid=2"/>
+				<rdf:li rdf:resource="http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=12&amp;Itemid=2"/>
+			</rdf:Seq>
+		</items>
+	</channel>
+	<image rdf:about="http://www.siamsoft.com/images/M_images/joomla_rss.png">
+		<title>Powered by Joomla!</title>
+		<link>http://www.siamsoft.com</link>
+		<url>http://www.siamsoft.com/images/M_images/joomla_rss.png</url>
+	</image>
+	<item rdf:about="http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=13&amp;Itemid=2">
+		<dc:format>text/html</dc:format>
+		<dc:date>2005-04-12T17:29:05+01:00</dc:date>
+		<dc:source>http://www.siamsoft.com</dc:source>
+		<title>Linux สั่งprint ไปยัง windows server</title>
+		<link>http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=13&amp;Itemid=2</link>
+		<description>Linux สั่งprint ไปยัง printer ที่ใช้ windows เป็น server</description>
+	</item>
+	<item rdf:about="http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=12&amp;Itemid=2">
+		<dc:format>text/html</dc:format>
+		<dc:date>2005-04-12T09:12:51+01:00</dc:date>
+		<dc:source>http://www.siamsoft.com</dc:source>
+		<title>ยินดีต้อนรับ</title>
+		<link>http://www.siamsoft.com/index.php?option=com_content&amp;task=view&amp;id=12&amp;Itemid=2</link>
+		<description>สวัสดีครับ ยินดีต้อนรับเข้าสู้เวบสำหรับแนะนำการใช้งาน software สำหรับ ผู้ที่สนใจ พัฒนาโปรแกรม..</description>
+	</item>
+</rdf:RDF>

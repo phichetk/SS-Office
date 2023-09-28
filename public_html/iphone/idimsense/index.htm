@@ -1,0 +1,48 @@
+<?PHP
+$dmScene =$_REQUEST['dmScene'];
+
+
+$strFileName = "status.xml";
+$objFopen = fopen($strFileName, 'w');
+//$strText1 = "I Love ThaiCreate.Com Line1\r\n";
+
+$strText2 = "<response> \r\n";
+$strText2 .= "<led0>0</led0>\r\n";
+$strText2 .= "<ID>2</ID>\r\n";
+$strText2 .= "<Scene>".$dmScene."</Scene>\r\n";
+$strText2 .= "<name0>HOME01</name0>\r\n";
+$strText2 .= "<name1>SCENE 2</name1>\r\n";
+$strText2 .= "<name2>XXXXXX</name2>\r\n";
+$strText2 .= "<name3>TTTT</name3>\r\n";
+$strText2 .= "<name4>SCENSE 5</name4>\r\n";
+$strText2 .= "<name5>SCENSE 6</name5>\r\n";
+$strText2 .= "<name6>SCENSE 7</name6>\r\n";
+$strText2 .= "<name7>SCENSE 8</name7>\r\n";
+$strText2 .= "<name8>SCENSE 9</name8>\r\n";
+$strText2 .= "<name9>SCENSE 10</name9>\r\n";
+$strText2 .= "<name10>SCENSE 11</name10>\r\n";
+$strText2 .= "<name11>SCENSE 12</name11>\r\n";
+$strText2 .= "<name12>SCENSE 13</name12>\r\n";
+$strText2 .= "<name13>SCENSE 14</name13>\r\n";
+$strText2 .= "<name14>SCENSE 15</name14>\r\n";
+$strText2 .= "<name15>SCENSE 16</name15>\r\n";
+$strText2 .= "</response>\r\n";
+
+//fwrite($objFopen, $strText1);
+//$strText2 = "I Love ThaiCreate.Com Line2\r\n";
+fwrite($objFopen, $strText2);
+//$strText3 = "I Love ThaiCreate.Com Line3\r\n";
+//fwrite($objFopen, $strText3);
+
+if($objFopen)
+{
+
+   echo "File writed.";
+}
+else
+{
+   echo "File can not write".$dmScene." ";
+}
+
+fclose($objFopen);
+?>

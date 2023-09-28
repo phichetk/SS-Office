@@ -1,0 +1,22 @@
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+    <td width="1" bgcolor="#000000"><img src="<?php echo RELA_DIR ?>templates/<?php echo CURRENT_SKIN ?>/images/black.gif" width="1" height="1"></td>
+  </tr>
+  <tr> 
+    <td colspan="3" bgcolor="#000000"><img src="<?php echo RELA_DIR ?>templates/<?php echo CURRENT_SKIN ?>/images/black.gif" width="1" height="1"></td>
+  </tr>
+</table>
+<table width="750" border="0" cellspacing="0" cellpadding="0" align="center">
+  <tr> 
+    <td width="397" height="17">&nbsp;</td>
+    <td align="right" width="353" background="<?php echo RELA_DIR ?>templates/<?php echo CURRENT_SKIN ?>/images/line_3.gif" height="17"><font color="#FFFFFF" class="p8"><?php echo COPYRIGHT ?></font></td>
+  </tr>
+</table>
+<br>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<?php
+
+/////
+ $SHOW_FILE_NAME = (SHOW_FILE_NAME == "Y") ? basename(__FILE__): "";
+ echo $SHOW_FILE_NAME;
+/////
+?>
+<form action="main.php" method="get" enctype="text/plain">
+
+
+<table>
+<tr>
+	<td align="center">เพิ่มชื่อลูกค้าสำหรับออกใบเสร็จ</td>
+	<td></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ชื่อ ผู้ติดต่อ</td>
+	<td><input type="text" name="receipt_contect_name" /></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ชื่อ บริษัท</td>
+	<td><input type="text" name="receipt_company_name" /></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ที่อยู่1</td>
+	<td><input type="text" name="receipt_address1" /></td>
+	<td></td>
+</tr>
+<tr>
+	<td>ที่อยู่2</td>
+	<td><input type="text" name="receipt_address2" /></td>
+	<td></td>
+</tr>
+<tr>
+	<td>รหัสไปรษณีย์</td>
+	<td><input type="text" name="receipt_post" /></td>
+	<td></td>
+</tr>
+<tr>
+	<td>เบอร์โทรศัพท์</td>
+	<td><input type="text" name="receipt_tel" /></td>
+	<td></td>
+</tr>
+<!--tr>
+	<td>เบอร์มือถือ</td>
+	<td><input type="text" name="receipt_mobile" /></td>
+	<td></td>
+</tr>
+<tr>
+	<td>เบอร์แฟกส์</td>
+	<td><input type="text" name="receipt_fax" /></td>
+	<td></td>
+</tr-->
+<tr>
+	<td>เลขผู้เสียภาษี</td>
+	<td><input type="text"  name="TaxNo"/></td>
+	<td></td>
+</tr>
+<!--tr>
+	<td>เลขนิติบุคคล</td>
+	<td><input type="text" name="No"/></td>
+	<td></td>
+</tr-->
+<input type="hidden"  value="Receipt-Customer-Add-Exe" name="myKey" />
+<tr>
+	<td></td>
+	<td><input type="submit" /></td>
+	<td></td>
+</tr>
+
+</table>
+</form>

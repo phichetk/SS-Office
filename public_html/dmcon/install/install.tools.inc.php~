@@ -1,0 +1,545 @@
+<?php
+function showWelcome()
+{
+	include("welcome.php");
+	
+	die();
+}
+
+function processStep1($message)
+{
+	$sub_version = split("\.", PHP_VERSION);
+	if(intval($sub_version[0]) < 4)
+	{
+		include("welcome.php");
+		showAlertMsg("You PHP Version is too lower.");
+		
+		die();
+	}else if(intval($sub_version[0]) == 4) {
+		if(intval($sub_version[1]) < 1)
+		{
+			include("welcome.php");
+			showAlertMsg("You PHP Version is too lower.");
+			
+			die();
+		}
+	}
+	
+	$database_type		= handleData($_REQUEST["database_type"]);
+	$database_host		= handleData($_REQUEST["database_host"]);
+	$database_username	= handleData($_REQUEST["database_username"]);
+	$database_password	= handleData($_REQUEST["database_password"]);
+	$database_name		= handleData($_REQUEST["database_name"]);
+	
+	include("step1.php");
+	showAlertMsg($message);
+	
+	die();
+}
+
+function processStep2($message)
+{
+	$database_type		= handleData($_REQUEST["database_type"]);
+	$database_host		= handleData($_REQUEST["database_host"]);
+	$database_username	= handleData($_REQUEST["database_username"]);
+	$database_password	= handleData($_REQUEST["database_password"]);
+	$database_name		= handleData($_REQUEST["database_name"]);
+	
+	if($database_type == ""
+		|| $database_host == ""
+		|| $database_username == ""
+		|| $database_password == ""
+		|| $database_name == "")
+	{
+		processStep1("Please provide valid Database Connection Parameters");
+	}
+
+	if(intval($database_type) == 1)
+	{
+		$db_type = "mysql";
+	}else {
+		$db_type = "mssql";
+	}
+	$conn = &ADONewConnection($db_type);
+	@$conn->PConnect($database_host, $database_username, $database_password, $database_name);
+	if($db_type == "mysql")
+	{
+		if($conn->ErrorMsg() != "")
+		{
+			processStep1("Connect database server fail");
+		}
+	}else {
+		if($conn->ErrorNo()!= 0)
+		{
+			processStep1("Connect database server fail");
+		}
+	}
+	if(!is_writable("../server.inc.php")) 
+//	if(!$fp = fopen("../server.inc.php", "w"))
+	{
+		processStep1("Create file fail. Check Permission of file server.inc.php");
+	}
+	if(!is_writable("../common/Smarty/smarty/templates_c")) {
+		processStep1("Create file fail. Check Permission of directory template_c");
+	}
+	$fp = @fopen("../server.inc.php", "w");	
+	$content = "<?php
+	session_start();
+	
+	define(\"DB_TYPE\", \"" . $db_type . "\");
+	define(\"DB_HOST\", \"" . $database_host . "\");
+	define(\"DB_USER\", \"" . $database_username . "\");
+	define(\"DB_PASSWORD\", \"" . $database_password . "\");
+	define(\"DB_DATABASE\", \"" . $database_name . "\");
+	define(\"ROOT_DIR\", dirname(__FILE__) . \"/\");
+?>";
+	fputs($fp, $content);
+	fclose($fp);
+
+	$content = "";
+	if($db_type == "mysql")
+	{
+		$fp = fopen("../doc/database/mysql.sql", "r");
+		while(!feof($fp))
+		{
+			$content .= fgets($fp, 256);
+		}
+		$contents = split(";", $content);
+		$c_count = count($contents);
+		for($i = 0; $i < $c_count; $i ++)
+		{
+			$contents[$i] .= ";";
+			$rs = $conn->Execute($contents[$i]);
+			if(!$rs)
+			{
+				processStep1("Create database fail");
+			}
+		}
+	}else {
+		$fp = fopen("../doc/database/mssql.sql", "r");
+		while(!feof($fp))
+		{
+			$content .= fgets($fp, 256);
+		}
+		$rs = $conn->Execute($content);
+		if(!$rs)
+		{
+			processStep1("Create database fail");
+		}
+	}
+
+	fclose($fp);
+	$rs->Close();
+	
+	include("step2.php");
+	
+	die();
+}
+
+function processStep3($message)
+{
+	$admin_password1	= handleData($_REQUEST["admin_password1"]);
+	$admin_password2	= handleData($_REQUEST["admin_password2"]);
+	$admin_name		= handleData($_REQUEST["admin_name"]);
+	$admin_dept		= handleData($_REQUEST["admin_dept"]);
+//	$current_skin		= handleData($_REQUEST["current_skin"]);
+	$website_language	= handleData($_REQUEST["website_language"]);
+	$website_title		= handleData($_REQUEST["website_title"]);
+	$website_copyright	= handleData($_REQUEST["website_copyright"]);
+	$website_pagesize	= intval(handleData($_REQUEST["website_pagesize"]));
+	$customer_id		= intval(handleData($_REQUEST["customer_id"]));
+	$customer_password	= handleData($_REQUEST["customer_password"]);
+	$support_email		= handleData($_REQUEST["support_email"]);
+	
+	if($admin_password1 == ""
+		|| strlen($admin_password1) > 20
+		|| checkAscii($admin_password1))
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid value of Administrator Password");
+		
+		die();
+	}
+	if($admin_password1 != $admin_password2)
+	{
+		include("step2.php");
+		showAlertMsg("The two Administrator Password should be the same");
+		
+		die();
+	}
+	if($admin_name == ""
+		|| strlen($admin_name) > 50)
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid value of Administrator Name");
+		
+		die();
+	}
+	if($admin_dept == ""
+		|| strlen($admin_dept) > 50)
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid value of Administrator Dept.");
+		
+		die();
+	}
+	if(checkMail($support_email))
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid value of Administrator E-mail.");
+		
+		die();
+	}
+	
+/*	$d = dir("../templates");
+	while($entry = $d->read())
+	{
+		if($entry == $current_skin)
+		{
+			$flag = 1;
+			break;
+		}
+	}
+	if($flag != 1)
+	{
+		include("step2.php");
+		showAlertMsg("Please select a correct Website Skin");
+		
+		die();
+	}*/
+	if($website_language != 1 && $website_language != 2)
+	{
+		$website_language = 1;
+	}
+	if($website_title == ""
+		|| strlen($website_title) > 100)
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid Website Title");
+		
+		die();
+	}
+	if($website_copyright == ""
+		|| strlen($website_copyright) > 100)
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid Website Copyright");
+		
+		die();
+	}	
+	if($website_pagesize < 1 || $website_pagesize > 50)
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid Website Pagesize");
+		
+		die();
+	}
+	if($customer_id < 10000 || $customer_id > 10000000)
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid Customer ID (between 10000 and 10000000)");
+		
+		die();
+	}
+	if($customer_password == ""
+		|| strlen($customer_password) > 20
+		|| checkAscii($customer_password))
+	{
+		include("step2.php");
+		showAlertMsg("Please provide a valid Customer Password");
+		
+		die();
+	}
+
+	$rela_dir = $_SERVER["PHP_SELF"];
+	$end_pos = strpos($rela_dir, "install/");
+	$rela_dir = substr($rela_dir, 0, $end_pos);
+
+	include("../server.inc.php");
+	include("../common/db.inc.php");
+	$conn = connectDB();
+	$admin_password1	= handleSQLData($admin_password1);
+	$admin_name		= handleSQLData($admin_name);
+	$admin_dept		= handleSQLData($admin_dept);
+	$support_email		= handleSQLData($support_email);
+	$sql = "select * from admins";
+	$rs = $conn->Execute($sql);
+	if($rs)
+	{
+		if($rs->RecordCount() > 0)
+		{
+			include("step3.php");
+			showAlertMsg("The Template 3 installation has been complete");
+			
+			die();
+		}
+	}
+	if(DB_TYPE == "mysql")
+	{
+		$sql = "insert into admins(
+				admin_id,		name,			dept,
+				password,		add_time,		flag
+			)values(" .
+				"100, '" .		$admin_name . "', '" .	$admin_dept . "', '" .
+				$admin_password1 . "', '" . getDatetime() . "', 0" .
+			")";
+	}else {
+		$sql = "insert into admins(
+				name,			dept,			password,
+				add_time,		flag
+			)values('" .
+				$admin_name . "', '" .	$admin_dept . "', '" .	$admin_password1 . "', '" .
+				getDatetime() . "', " .	"0" .
+			")";
+	}
+
+	$rs = $conn->Execute($sql);
+	if(!$rs)
+	{
+		include("step2.php");
+		showAlertMsg("Insert data error in admin table");
+		
+		die();
+	}
+
+	//$current_skin		= handleSQLData($current_skin);
+	$website_title		= handleSQLData($website_title);
+	$website_copyright	= handleSQLData($website_copyright);
+	$rela_dir		= handleSQLData($rela_dir);
+	$sql = "insert into web_config(
+			website_language,		title,
+			copyright,			pagesize,			system_status,
+			order_id,			customer_id,			password,
+			reg_host,			reg_port,			rela_dir,
+			dom_upg_host,			dom_upg_port,			dom_upg_url,
+			support_email
+		)values('" .
+			$website_language . "', '" .	$website_title . "', '" .
+			$website_copyright . "', " .	$website_pagesize . ", " .	"1" . ", " .
+			"1" . ", " .			$customer_id . ", '" .		md5($customer_password) . "', '" .
+			"218.5.81.149" . "', " .		"20001" . ", '" .		$rela_dir . "', '" .
+			"www.onlinenic.com" . "', " .	"80" . ", '" .			"/english/template3/" . "', '" .
+			$support_email .
+		"')";
+	$rs = $conn->Execute($sql);
+	if(!$rs)
+	{
+		include("step2.php");
+		showAlertMsg("Insert data error");
+		
+		die();
+	}
+	
+	include("step3.php");
+	
+	die();
+}
+
+step1.php");
+	showAlertMsg($message);
+	
+	die();
+}
+function upgradeStep2($message)
+{
+	include("ClassFileManipulation.php");
+	$database_type		= handleData($_REQUEST["database_type"]);
+	$database_host		= handleData($_REQUEST["database_host"]);
+	$database_username	= handleData($_REQUEST["database_username"]);
+	$database_password	= handleData($_REQUEST["database_password"]);
+	$database_name		= handleData($_REQUEST["database_name"]);
+	$dir_path	    	= handleData($_REQUEST["dir_path"]);
+	if($database_type == ""
+		|| $database_host == ""
+		|| $database_username == ""
+		|| $database_password == ""
+		|| $database_name == ""
+		|| $dir_path == "")
+	{
+		upgradeStep1("Please provide valid Database Connection Parameters");
+	}
+	if($current_skin == "")
+	{
+		$current_skin = "template_english";
+	}
+	if(intval($database_type) == 1)
+	{
+		$db_type = "mysql";
+	}else {
+		$db_type = "mssql";
+	}
+	$conn = &ADONewConnection($db_type);
+	@$conn->PConnect($database_host, $database_username, $database_password, $database_name);
+	if($db_type == "mysql")
+	{
+		if($conn->ErrorMsg() != "")
+		{
+			upgradeStep1("Connect database server fail");
+		}
+	}else {
+		if($conn->ErrorNo()!= 0)
+		{
+			processStep1("Connect database server fail");
+		}
+	}
+
+$output = shell_exec("mysqldump -h $database_host -u $database_username -p$database_password  $database_name > $database_name.sql");
+        echo "<pre>$output</pre>";
+$output = shell_exec("mysqldump -h $database_host -u $database_username -p$database_password  $database_name web_config >  web_config.sql");
+echo "mysqldump -h $database_host -u $database_username -p$database_password  $database_name > ../backups/$database_name.sql";
+        echo "<pre>$output</pre>";
+	$database = $database_name.'.sql';
+	
+	if (!copy('web_config.sql', 'web_config.sql.bkp')) {
+ 		  echo "failed to copy $file...\n";
+	}
+	$server_config_path = $dir_path.'/server.inc.php';
+	if (!copy($server_config_path, 'server.inc.php.old' )) {                                                                                  echo "failed to copy $file...\n";                                                                             }
+/*
+	$server_config_path = $dir_path.'/server.inc.php';
+	if (!copy('server.inc.php.old',$server_config_path)) {
+                      echo "failed to copy $file...\n";
+        }
+*/
+/*
+	$old_database = $dir_path.'/'.$database;
+	if (!copy($database, $old_database)) {
+ 		  echo "failed to copy $file...\n";
+	}
+        $output = shell_exec("cp -rf  $dir_path/$database_name.sql $database_name.sql.bkp ");
+        echo "<pre>$output</pre>";
+
+        $output = shell_exec("cp -rf  $dir_path/web_config.sql web_config.sql.bkp ");
+        echo "<pre>$output</pre>";
+*/
+	$output = shell_exec("cp -prf $dir_path  ../backups/template_old.bkp ");
+        echo "<pre>$output</pre>";
+	
+	$output = shell_exec("cp -prf ../ $dir_path/ ");
+        echo "<pre>$output</pre>";
+
+	$file_upgrade= new FileMan();
+        $file_upgrade->setFile("web_config.sql.bkp");
+	$line = $file_upgrade->searchInLine("CREATE TABLE web_config");
+	if(is_array($line)){
+	        foreach ($line as $key => $value) {
+//		   echo $value ."***".$key."***".$temp[0];
+
+          	   $str_replace="CREATE TABLE IF NOT EXISTS web_config (";
+		   $file_upgrade->replaceLine($key,$str_replace);
+        	}
+	}
+	$file_upgrade2= new FileMan();
+        $file_upgrade2->setFile("web_config.sql.bkp");
+	$line1 = $file_upgrade2->searchInLine("INSERT INTO web_config VALUES");
+        if(is_array($line1)){
+                foreach ($line1 as $key => $value) {
+                 echo $value ."***".$key."***".$temp[0];
+		$str_replace1=str_replace("INSERT INTO web_config VALUES", "INSERT INTO web_config (current_skin,website_language,title,copyright,pagesize,system_status,order_id,customer_id,password,reg_host,reg_port,rela_dir,dom_upg_host,dom_upg_port,dom_upg_url,support_email) VALUES", $value);
+//echo  $str_replace1;
+                   $file_upgrade2->replaceLine($key,$str_replace1);
+                }
+        }
+
+        $fp = fopen("upgrade.sql", "r");
+                while(!feof($fp))
+                {
+                        $content .= fgets($fp, 256);
+                }
+                $contents = split(";", $content);
+                $c_count = count($contents);
+                for($i = 0; $i < $c_count; $i ++)
+                {
+                        $contents[$i] .= ";";
+                        $rs = $conn->Execute($contents[$i]);
+                        if(!$rs)
+                        {
+                                upgradeStep1("Creating new tables failed");
+                        }
+                }
+	fclose($fp);
+	 $output = shell_exec("mysql -h $database_host -u $database_username -p$database_password  $database_name <  web_config.sql.bkp");
+echo "<pre>$output</pre>";
+	showAlertMsg("Database upgrade has been complete. Copy the contents of template3 to $dir_path");
+/*	$fp1 = fopen("web_config.sql.bkp", "r");
+                while(!feof($fp1))
+                {
+                        $content .= fgets($fp1, 256);
+                }
+                $contents = split(";", $content);
+                $c_count = count($contents);
+                for($i = 0; $i < $c_count; $i ++)
+                {
+                        $contents[$i] .= ";";
+                        $rs = $conn->Execute($contents[$i]);
+                        if(!$rs)
+                        {
+                        	//echo "<br>". $contents[$i]; 
+			       upgradeStep1("Restoring web_config table failed");
+                        }
+                }
+fclose($fp1);*/
+
+/*	$output = shell_exec("mysqldump -h $database_host -u $database_username -p$database_password  $database_name > $database_name.sql");
+ 
+	echo "<pre>$output</pre>";
+	$output = shell_exec("cp -rf $database_name.sql $database_name.sql.bkp ");
+	echo "<pre>$output</pre>";*/
+	/*if(!$fp = fopen("../server.inc.php", "w"))
+	{
+		processStep1("Create file fail");
+	}
+	
+	$content = "<?php
+	session_start();
+	
+	define(\"DB_TYPE\", \"" . $db_type . "\");
+	define(\"DB_HOST\", \"" . $database_host . "\");
+	define(\"DB_USER\", \"" . $database_username . "\");
+	define(\"DB_PASSWORD\", \"" . $database_password . "\");
+	define(\"DB_DATABASE\", \"" . $database_name . "\");
+	define(\"ROOT_DIR\", dirname(__FILE__) . \"/\");
+?>";
+	fputs($fp, $content);
+	fclose($fp);
+	$content = "";
+	if($db_type == "mysql")
+	{
+		$fp = fopen("../doc/database/mysql.sql", "r");
+		while(!feof($fp))
+		{
+			$content .= fgets($fp, 256);
+		}
+		$contents = split(";", $content);
+		$c_count = count($contents);
+		for($i = 0; $i < $c_count; $i ++)
+		{
+			$contents[$i] .= ";";
+			$rs = $conn->Execute($contents[$i]);
+			if(!$rs)
+			{
+				upgradeStep1("Create database fail");
+			}
+		}
+	}else {
+		$fp = fopen("../doc/database/mssql.sql", "r");
+		while(!feof($fp))
+		{
+			$content .= fgets($fp, 256);
+		}
+		$rs = $conn->Execute($content);
+		if(!$rs)
+		{
+			upgradeStep1("Create database fail");
+		}
+	}
+
+	fclose($fp);
+	$rs->Close();*/
+	
+	include("ustep2.php");
+	
+	die();
+}
+
+?>

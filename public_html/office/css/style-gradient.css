@@ -1,0 +1,28 @@
+.style {
+    filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#6998A7', startColorstr='#CFE4E9', gradientType='0')
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #1A6984;
+	border-left-color: #1A6984;
+	border-top-width: 1px;
+}
+.style2 {
+    filter:progid:DXImageTransform.Microsoft.Gradient(endColorstr='#6998A7', startColorstr='#E6F7FE', gradientType='0')
+	border-top-width: 1px;
+	border-top-width: 1px;
+}
+.style_down {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #1F6179;
+	background-color: #6998A7;
+	border-right-width: 1px;
+	border-right-style: solid;
+	border-right-color: #1F6179;
+}
+.style_menu {
+	background-color: #CFE4E9;
+}

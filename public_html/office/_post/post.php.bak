@@ -1,0 +1,330 @@
+<?php
+session_start();
+
+
+########## Load Configuration ##########
+
+require("pdf/fpdf.php");
+
+########## Action ##########
+
+
+$siamsoft_conpanyname = "ºÃÔÉÑ· ÊÂÒÁ«Í¿·ì´Í·¤ÍÁ ¨Ó¡Ñ´";
+$siamsoft_address = "51 «ÍÂ ÍèÍ¹¹Øª 65 áÂ¡ 9 »ÃÐàÇÈ »ÃÐàÇÈ ¡·Á. 10250";
+
+$no1_name = "FATIMA R.B.D.S";
+$no1_zip = "10400";
+$no1_remark = "201007016";
+
+$no2_name = "ºÃÔÉÑ· â»ÃàÍà«ÕÂ «Ñ¾¾ÅÒÂ ¨Ó¡Ñ´";
+$no2_zip = "10240";
+$no2_remark = "201007017";
+
+$no3_name = "ºÃÔÉÑ· ´Ô¨Ô¨µÍÅ Ê¡ÃÕ¹ à¾ÅÂì ¨Ó¡Ñ´";
+$no3_zip = "10240";
+$no3_remark = "201008001";
+
+$no4_name = "ºÃÔÉÑ· ÍÕ ÍÔ¹â¹àÇªÑè¹ «ÔÊàµçÁ ";
+$no4_zip = "11000";
+$no4_remark = "201008002";
+
+/*
+$no5_name = "Blue Ink Co.,Ltd.";
+$no5_zip = "10110";
+$no5_remark = "201007007";
+
+$no6_name = "SIAM MEDIA CENTER CO.,LTD.";
+$no6_zip = "20150";
+$no6_remark = "201007008";
+
+$no7_name = "âÃ§àÃÕÂ¹Ë¹Í§¾ÅÑºÇÔ·ÂÒ";
+$no7_zip = "77110";
+$no7_remark = "201007009";
+
+$no8_name = "Ë¨¡. ÅÒÀÇÔºÙÅÂì¡Ô¨";
+$no8_zip = "10400";
+$no8_remark= "201007010";
+
+$no9_name = "ºÃÔÉÑ· äÍ.àÍç¹.·Õ.¿Ùé´Êì ¨Ó¡Ñ´ ";
+$no9_zip = "21140";
+$no9_remark = "201007011";
+
+$no10_name = "º¨¡. áÁÊ¤ÔÇÅÔ¹ ¤ÍÃì»ÍàÃªÑè¹";
+$no10_zip = "10250";
+$no10_remark = "201007012";
+
+$no11_name = "º¨¡.àÍ.«Õ.¤Í¹â·ÃÅ ";
+$no11_zip = "10280";
+$no11_remark = "201007013";
+
+$no12_name = "Aromatech";
+$no12_zip = "10150";
+$no12_remark = "201007014";
+
+$no13_name = "º¨¡.  àÍç¡«ìµÃéÒ á¤Ãì";
+$no13_zip = "11120";
+$no13_remark = "201007015";
+*/
+//$no14_name = "º¨¡.  àÍç¡«ìµÃéÒ á¤Ãì";
+//$no14_zip = "11120";
+//$no14_remark = "201007015";
+
+
+
+
+
+class PDF extends FPDF {
+	function SetThaiFont() {
+		$this->AddFont('DilleniaUPC','B','dillb.php');
+
+	}
+	
+	function conv($string) {
+		return iconv('UTF-8', 'TIS-620', $string);
+		return $string;
+	}
+}
+
+$pdf = new PDF();
+
+$pdf->SetThaiFont();
+
+//$pdf->SetMargins(20, 20);
+$pdf->SetMargins(0, 0);
+
+$pdf->AddPage();
+if($_REQUEST['act']=="nobg"){
+	//$pdf->Image('bulkpost.gif', 0, 0, 200);
+}else{
+	$pdf->Image('bulkpost.gif', 0, 0, 100);
+}
+
+
+$pdf->SetFont('DilleniaUPC', 'B', 18);
+$pdf->Ln(44);
+$SS1 ="                               ";
+$SS1 .= $siamsoft_conpanyname;
+$pdf->MultiCell(320, 0, $SS1, 0, 'L');
+
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(10);
+$SS2 ="                                    ";
+$SS2 .= $siamsoft_address;
+$pdf->MultiCell(0, 0, $SS2, 0, 'L');
+
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(36);
+$NO1_NAME ="               ";
+$NO1_NAME .= $no1_name ;
+$pdf->MultiCell(0, 0, $NO1_NAME, 0, 'L');
+
+$NO1_ZIP ="                                                            ";
+$NO1_ZIP .= $no1_zip;
+$pdf->MultiCell(0, 0, $NO1_ZIP, 0, 'L');
+
+$NO1_REMARK = "".$no1_remark ;
+$NO1_REMARK .="";
+$pdf->MultiCell(0, 0, $NO1_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO2_NAME ="               ";
+$NO2_NAME .= $no2_name ;
+$pdf->MultiCell(0, 0, $NO2_NAME, 0, 'L');
+
+$NO2_ZIP ="                                                            ";
+$NO2_ZIP .= $no2_zip;
+$pdf->MultiCell(0, 0, $NO2_ZIP, 0, 'L');
+
+$NO2_REMARK = "".$no2_remark ;
+$NO2_REMARK .="";
+$pdf->MultiCell(0, 0, $NO2_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO3_NAME ="               ";
+$NO3_NAME .= $no3_name ;
+$pdf->MultiCell(0, 0, $NO3_NAME, 0, 'L');
+
+$NO3_ZIP ="                                                            ";
+$NO3_ZIP .= $no3_zip;
+$pdf->MultiCell(0, 0, $NO3_ZIP, 0, 'L');
+
+$NO3_REMARK = "".$no3_remark ;
+$NO3_REMARK .="";
+$pdf->MultiCell(0, 0, $NO3_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO4_NAME ="               ";
+$NO4_NAME .= $no4_name ;
+$pdf->MultiCell(0, 0, $NO4_NAME, 0, 'L');
+
+$NO4_ZIP ="                                                            ";
+$NO4_ZIP .= $no4_zip;
+$pdf->MultiCell(0, 0, $NO4_ZIP, 0, 'L');
+
+$NO4_REMARK = "".$no4_remark ;
+$NO4_REMARK .="";
+$pdf->MultiCell(0, 0, $NO4_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO5_NAME ="               ";
+$NO5_NAME .= $no5_name ;
+$pdf->MultiCell(0, 0, $NO5_NAME, 0, 'L');
+
+$NO5_ZIP ="                                                            ";
+$NO5_ZIP .= $no5_zip;
+$pdf->MultiCell(0, 0, $NO5_ZIP, 0, 'L');
+
+$NO5_REMARK = "".$no5_remark ;
+$NO5_REMARK .="";
+$pdf->MultiCell(0, 0, $NO5_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO6_NAME ="               ";
+$NO6_NAME .= $no6_name ;
+$pdf->MultiCell(0, 0, $NO6_NAME, 0, 'L');
+
+$NO6_ZIP ="                                                            ";
+$NO6_ZIP .= $no6_zip;
+$pdf->MultiCell(0, 0, $NO6_ZIP, 0, 'L');
+
+$NO6_REMARK = "".$no6_remark ;
+$NO6_REMARK .="";
+$pdf->MultiCell(0, 0, $NO6_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO7_NAME ="               ";
+$NO7_NAME .= $no7_name ;
+$pdf->MultiCell(0, 0, $NO7_NAME, 0, 'L');
+
+$NO7_ZIP ="                                                            ";
+$NO7_ZIP .= $no7_zip;
+$pdf->MultiCell(0, 0, $NO7_ZIP, 0, 'L');
+
+$NO7_REMARK = "".$no7_remark ;
+$NO7_REMARK .="";
+$pdf->MultiCell(0, 0, $NO7_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO8_NAME ="               ";
+$NO8_NAME .= $no8_name ;
+$pdf->MultiCell(0, 0, $NO8_NAME, 0, 'L');
+
+$NO8_ZIP ="                                                            ";
+$NO8_ZIP .= $no8_zip;
+$pdf->MultiCell(0, 0, $NO8_ZIP, 0, 'L');
+
+$NO8_REMARK = "".$no8_remark ;
+$NO8_REMARK .="";
+$pdf->MultiCell(0, 0, $NO8_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO9_NAME ="               ";
+$NO9_NAME .= $no9_name ;
+$pdf->MultiCell(0, 0, $NO9_NAME, 0, 'L');
+
+$NO9_ZIP ="                                                            ";
+$NO9_ZIP .= $no9_zip;
+$pdf->MultiCell(0, 0, $NO9_ZIP, 0, 'L');
+
+$NO9_REMARK = "".$no9_remark ;
+$NO9_REMARK .="";
+$pdf->MultiCell(0, 0, $NO9_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO10_NAME ="               ";
+$NO10_NAME .= $no10_name ;
+$pdf->MultiCell(0, 0, $NO10_NAME, 0, 'L');
+
+$NO10_ZIP ="                                                            ";
+$NO10_ZIP .= $no10_zip;
+$pdf->MultiCell(0, 0, $NO10_ZIP, 0, 'L');
+
+$NO10_REMARK = "".$no10_remark ;
+$NO10_REMARK .="";
+$pdf->MultiCell(0, 0, $NO10_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO11_NAME ="               ";
+$NO11_NAME .= $no11_name ;
+$pdf->MultiCell(0, 0, $NO11_NAME, 0, 'L');
+
+$NO11_ZIP ="                                                            ";
+$NO11_ZIP .= $no11_zip;
+$pdf->MultiCell(0, 0, $NO11_ZIP, 0, 'L');
+
+$NO11_REMARK = "".$no11_remark ;
+$NO11_REMARK .="";
+$pdf->MultiCell(0, 0, $NO11_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO12_NAME ="               ";
+$NO12_NAME .= $no12_name ;
+$pdf->MultiCell(0, 0, $NO12_NAME, 0, 'L');
+
+$NO12_ZIP ="                                                            ";
+$NO12_ZIP .= $no12_zip;
+$pdf->MultiCell(0, 0, $NO12_ZIP, 0, 'L');
+
+$NO12_REMARK = "".$no12_remark ;
+$NO12_REMARK .="";
+$pdf->MultiCell(0, 0, $NO12_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO13_NAME ="               ";
+$NO13_NAME .= $no13_name ;
+$pdf->MultiCell(0, 0, $NO13_NAME, 0, 'L');
+
+$NO13_ZIP ="                                                            ";
+$NO13_ZIP .= $no13_zip;
+$pdf->MultiCell(0, 0, $NO13_ZIP, 0, 'L');
+
+$NO13_REMARK = "".$no13_remark ;
+$NO13_REMARK .="";
+$pdf->MultiCell(0, 0, $NO13_REMARK, 0, 'R');
+////////////////////////////////////////////////////////////////////////
+$pdf->SetFont('DilleniaUPC', 'B', 16);
+$pdf->Ln(12);
+$NO14_NAME ="               ";
+$NO14_NAME .= $no14_name ;
+$pdf->MultiCell(0, 0, $NO14_NAME, 0, 'L');
+
+$NO14_ZIP ="                                                            ";
+$NO14_ZIP .= $no14_zip;
+$pdf->MultiCell(0, 0, $NO14_ZIP, 0, 'L');
+
+$NO14_REMARK = "".$no14_remark ;
+$NO14_REMARK .="";
+$pdf->MultiCell(0, 0, $NO14_REMARK, 0, 'R');
+/////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+///////////////////////////////////////////////
+
+
+if($_REQUEST['act']=="save"){
+	$outputname ="AP".$transectionID.".pdf";
+	$pdf->Output($outputname,'D');
+}else{
+	$pdf->Output();
+}
+
+
+?>

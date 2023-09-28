@@ -1,0 +1,68 @@
+	function check(document){
+		if(document.username.value==""){
+			alert("กรุณาใส่ Login Name");
+			document.username.focus();
+			return false;
+		}
+				if(document.fullname.value==""){
+			document.fullname.value=document.username.value;
+		}
+		if(document.password.value==""){
+			alert("กรุณาใส่ รหัสผ่าน");
+			document.password.focus();
+			return false;
+		}		
+		if(document.repassword.value==""){
+			alert("กรุณาใส่ ยืนยันรหัสผ่าน");
+			document.repassword.focus();
+			return false;
+		}	
+		if(document.repassword.value!=document.password.value){
+			alert("ยืนยันรหัสผ่าน ไม่ตรงกับครั้งแรก");
+			document.repassword.value="";
+			document.repassword.focus();
+			return false;
+		}
+	return true;
+	}
+
+
+	function checkforloginedit(document){
+		if((document.password.value=="") && (document.repassword.value!=document.password.value)){
+			alert("ยืนยันรหัสผ่าน passwordpasswordไม่ตรงกับครั้งแรก!!!!");
+			document.password.focus();
+			return false;
+		}
+		if((document.repassword.value=="")  && (document.password.value!=document.repassword.value)){
+			alert("ยืนยันรหัสผ่าน ไม่ตรงกับครั้งแรก");
+			document.repassword.focus();
+			return false;
+		}
+	return true;
+	}
+
+	function checkeditpass(document){
+		if((document.password.value=="") && (document.repassword.value!=document.password.value)){
+			alert("ยืนยันรหัสผ่าน passwordpasswordไม่ตรงกับครั้งแรก!!!!");
+			document.password.focus();
+			return false;
+		}
+		if((document.repassword.value=="")  && (document.password.value!=document.repassword.value)){
+			alert("ยืนยันรหัสผ่าน ไม่ตรงกับครั้งแรก");
+			document.repassword.focus();
+			return false;
+		}
+	return true;
+	}
+
+	function checkmemberadd(document){
+
+					var emailFilter=/^.+@.+\..{2,3}$/;
+					var str=document.addmember.email.value;
+				if (!(emailFilter.test(str))) { 
+					   alert(\"กรุณาใส่ EMAIL ให้ถุกต้อง\");
+					   //document.addmember.email.focus();
+					   return false;
+				}
+					return true;
+	}
