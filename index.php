@@ -4,10 +4,16 @@ require("./office-data/config/default-config.php");
 
 if(ADMIN_LOGIN_USER==$_REQUEST['username'] && ADMIN_LOGIN_PASS==$_REQUEST['password'] )
 {
+    $myfile = fopen("./login-log.inc.php", "a")or die("Unable to open file!");
+    $txt = date("Y-m-d h:i:sa")." ".$_SERVER['REMOTE_ADDR']."\n";
+    fwrite($myfile, $txt);
+    fclose($myfile);
+
 session_start();
  header( "location: /siamsoft-all/public_html/office/main.php" );
  exit(0);
 }
+
 
 
 ?>
